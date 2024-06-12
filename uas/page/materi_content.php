@@ -63,7 +63,7 @@ $class_id = isset($_GET['class_id']) ? $_GET['class_id'] : 0; // Ambil ID kelas 
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary">Understood</button>
+                <button type="button" class="btn btn-primary">Tambah</button>
             </div>
         </div>
     </div>

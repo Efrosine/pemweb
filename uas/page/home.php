@@ -22,7 +22,10 @@
                 </span>
             </div>
             <div class="d-flex align-items-center">
-                <a class="btn btn-primary me-3" href="#" role="button"><i class="bi bi-plus"></i> Tambah Kelas</a>
+                <button type="button" class="btn btn-primary me-5" data-bs-toggle="modal"
+                    data-bs-target="#tambahKelasModal">
+                    <i class="bi bi-plus"></i> Tambah Kelas
+                </button>
                 <div class="dropdown">
                     <a class="nav-link" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown"
                         aria-expanded="false">
@@ -89,6 +92,35 @@
                 include ('home_content.php'); // Memuat 'home_content' secara default
             }
             ?>
+        </div>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="tambahKelasModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+        aria-labelledby="tambahKelasModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="tambahKelasModalLabel">Modal title</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form action="">
+                        <div class="mb-3">
+                            <label for="class_name" class="form-label">Nama Kelas</label>
+                            <input type="text" class="form-control" id="class_name" name="class_name" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="class_desc" class="form-label">Desc Kelas</label>
+                            <input type="text" class="form-control" id="class_desc" name="class_desc" required>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary">Tambah</button>
+                </div>
+            </div>
         </div>
     </div>
     <script src="../bootstrap/js/popper.min.js"></script>

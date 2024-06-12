@@ -5,39 +5,34 @@ $tab = isset($_GET['tab']) ? $_GET['tab'] : 'materi'; // Ambil tab dari paramete
     <!-- Nav tabs -->
     <ul class="nav nav-tabs" id="myTab" role="tablist">
         <li class="nav-item" role="presentation">
-            <button class="nav-link <?php echo ($tab == 'materi') ? 'active' : ''; ?>" id="materi-tab"
-                data-bs-toggle="tab" data-bs-target="#materi" type="button" role="tab" aria-controls="materi"
-                aria-selected="<?php echo ($tab == 'materi') ? 'true' : 'false'; ?>">materi</button>
+            <a class="nav-link <?php echo ($tab == 'materi') ? 'active' : ''; ?>"
+                href="home.php?page=class_content&tab=materi&class_id=<?php echo $class_id; ?>" role="tab">materi</a>
         </li>
         <li class="nav-item" role="presentation">
-            <button class="nav-link <?php echo ($tab == 'tugas') ? 'active' : ''; ?>" id="tugas-tab"
-                data-bs-toggle="tab" data-bs-target="#tugas" type="button" role="tab" aria-controls="tugas"
-                aria-selected="<?php echo ($tab == 'tugas') ? 'true' : 'false'; ?>">tugas</button>
+            <a class="nav-link <?php echo ($tab == 'tugas') ? 'active' : ''; ?>"
+                href="home.php?page=class_content&tab=tugas&class_id=<?php echo $class_id; ?>" role="tab">tugas</a>
         </li>
         <li class="nav-item" role="presentation">
-            <button class="nav-link <?php echo ($tab == 'kelompok') ? 'active' : ''; ?>" id="kelompok-tab"
-                data-bs-toggle="tab" data-bs-target="#kelompok" type="button" role="tab" aria-controls="kelompok"
-                aria-selected="<?php echo ($tab == 'kelompok') ? 'true' : 'false'; ?>">kelompok</button>
+            <a class="nav-link <?php echo ($tab == 'kelompok') ? 'active' : ''; ?>"
+                href="home.php?page=class_content&tab=kelompok&class_id=<?php echo $class_id; ?>"
+                role="tab">kelompok</a>
         </li>
         <li class="nav-item" role="presentation">
-            <button class="nav-link <?php echo ($tab == 'forum') ? 'active' : ''; ?>" id="forum-tab"
-                data-bs-toggle="tab" data-bs-target="#forum" type="button" role="tab" aria-controls="forum"
-                aria-selected="<?php echo ($tab == 'forum') ? 'true' : 'false'; ?>">forum</button>
+            <a class="nav-link <?php echo ($tab == 'forum') ? 'active' : ''; ?>"
+                href="home.php?page=class_content&tab=forum&class_id=<?php echo $class_id; ?>" role="tab">forum</a>
         </li>
         <li class="nav-item" role="presentation">
-            <button class="nav-link <?php echo ($tab == 'orang') ? 'active' : ''; ?>" id="orang-tab"
-                data-bs-toggle="tab" data-bs-target="#orang" type="button" role="tab" aria-controls="orang"
-                aria-selected="<?php echo ($tab == 'orang') ? 'true' : 'false'; ?>">orang</button>
+            <a class="nav-link <?php echo ($tab == 'orang') ? 'active' : ''; ?>"
+                href="home.php?page=class_content&tab=orang&class_id=<?php echo $class_id; ?>" role="tab">orang</a>
         </li>
         <li class="nav-item" role="presentation">
-            <button class="nav-link <?php echo ($tab == 'nilai') ? 'active' : ''; ?>" id="nilai-tab"
-                data-bs-toggle="tab" data-bs-target="#nilai" type="button" role="tab" aria-controls="nilai"
-                aria-selected="<?php echo ($tab == 'nilai') ? 'true' : 'false'; ?>">nilai</button>
+            <a class="nav-link <?php echo ($tab == 'nilai') ? 'active' : ''; ?>"
+                href="home.php?page=class_content&tab=nilai&class_id=<?php echo $class_id; ?>" role="tab">nilai</a>
         </li>
     </ul>
 
     <!-- Tab panes -->
-    <div class="tab-content px-5 pt-4">
+    <div class="tab-content px-4 pt-4">
         <div class="tab-pane <?php echo ($tab == 'materi') ? 'active' : ''; ?>" id="materi" role="tabpanel"
             aria-labelledby="materi-tab" tabindex="0">
             <?php

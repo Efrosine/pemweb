@@ -76,11 +76,23 @@ $class_id = isset($_GET['class_id']) ? $_GET['class_id'] : 0; // Ambil ID kelas 
                         <label for="tugas_file" class="form-label">Pilih File Pendukung</label>
                         <input class="form-control" type="file" id="tugas_file">
                     </div>
+                    <div class="mb-3">
+                        <label for="tugas_type" class="form-label">Tipe Tugas</label>
+                        <select class="form-select" id="tugas_type" name="tugas_type"
+                            aria-label="Example select with button addon">
+                            <option value="idv">Individu</option>
+                            <option value="group">Group</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="tugas_due_time" class="form-label">Due Date</label>
+                        <input type="date" class="form-control" id="tugas_due_time" name="tugas_due_time" required>
+                    </div>
                 </form>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary">Understood</button>
+                <button type="button" class="btn btn-primary">Tambah</button>
             </div>
         </div>
     </div>

@@ -2,30 +2,97 @@
 $tugas_individu_id = isset($_GET['tugas_individu_id']) ? $_GET['tugas_individu_id'] : 0;
 $class_id = isset($_GET['class_id']) ? $_GET['class_id'] : 0;
 ?>
-<div class="container bg-primary" style="border-radius: 24px;">
-    <div class="d-flex flex-column justify-content-start p-3">
-        <div class="d-flex align-items-end flex-row">
-            <div class="me-3">
-                <h1>Detail Tugas Individu <?php echo $tugas_individu_id; ?></h1>
+<div class="d-flex">
+    <ddiv class="d-flex flex-column flex-grow-1">
+        <div class="flex-grow-1">
+            <div class="d-flex">
+                <h1 class="me-auto">NmTugasIdv <?php $tugas_individu_id ?></h1>
+                <div>
+                    <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                        data-bs-target="#tambahTugasiModal">
+                        <i class="bi bi-pencil"></i> Edit Tugas
+                    </button>
+                </div>
             </div>
-            <h3>Nama dosen (Kelas <?php echo $class_id; ?>)</h3>
+            <div class="d-flex">
+                <h4 class="mt-auto mb-0">nmDosen</h4>
+                <p class="ms-3 me-auto mb-0 mt-auto">Tanggal</p>
+                <p class="mb-0 mt-auto">Tenggat : 12-12-12</p>
+            </div>
+            <hr>
+            <div class="mb-5">
+                <p>Petunjuk Tugas</p>
+            </div>
+
+            <div>
+                <div class="d-flex flex-column align-items-center justify-content-center">
+                    <form action="">
+                        <div class="mb-3">
+                            <label for="upload_file" class="form-label">Upload File</label>
+                            <input class="form-control" type="file" id="upload_file">
+                        </div>
+
+                        <button type="button" class="btn btn-primary">Kirim</button>
+                    </form>
+                </div>
+            </div>
         </div>
-        <h4>keterangan</h4>
+    </ddiv>
+    <div class="d-flex flex-column flex-shrink-1 ms-4" style="width: 250px;">
+        <h2>Nilai</h2>
+        <hr>
+        <div class="d-flex">
+            <div class="d-flex flex-column flex-grow-1 me-auto ">
+                <p>Status</p>
+                <p>Nilai</p>
+                <p>Penilai</p>
+                <p>Feedback</p>
+            </div>
+            <div class="d-flex flex-column flex-shrink-1 px-2 text-wrap">
+                <p>none</p>
+                <p>100/100</p>
+                <p>Fajar Triatmojo</p>
+                <p class="text-break">faskldjf;askldfj;asvmkdjrfvsaefjaseirfkjamoprmaes</p>
+            </div>
+        </div>
     </div>
 </div>
-
-<div class="d-flex justify-content-center my-5">
+<div class="d-flex my-5">
     <a href="home.php?page=class_content&class_id=<?php echo $class_id; ?>&tab=tugas" class="btn btn-secondary">
         <i class="bi bi-arrow-left"></i> Kembali ke Daftar Tugas
     </a>
 </div>
 
-<div class="container" style="border: 2px solid gray; border-radius: 24px;">
-    <div class="d-flex flex-column justify-content-start p-3">
-        <div class="me-3">
-            <h5>Detail tugas individu untuk ID: <?php echo $tugas_individu_id; ?></h5>
+
+<!-- Modal -->
+<div class="modal fade" id="tambahTugasiModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+    aria-labelledby="tambahTugasiModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="tambahTugasiModalLabel">Modal title</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form action="">
+                    <div class="mb-3">
+                        <label for="tugas_tittle" class="form-label">Judul Tugas</label>
+                        <input type="text" class="form-control" id="tugas_tittle" name="tugas_tittle" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="tugas_dec" class="form-label">Petujuk Tugas</label>
+                        <input type="text" class="form-control" id="tugas_dec" name="tugas_dec" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="tugas_file" class="form-label">Pilih File Pendukung</label>
+                        <input class="form-control" type="file" id="tugas_file">
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Understood</button>
+            </div>
         </div>
-        <h6>tgl</h6>
-        <!-- Konten detail tugas individu -->
     </div>
 </div>
