@@ -31,7 +31,11 @@
     <div class="tab-content px-5 pt-4">
         <div class="tab-pane active" id="materi" role="tabpanel" aria-labelledby="materi-tab" tabindex="0">
             <?php
-            include ('materi_content.php');
+            if (isset($_GET['detail'])) { // Memeriksa apakah ada parameter 'detail' di URL
+                include ('detail_materi.php'); // Memuat 'detail_materi.php' jika ada parameter 'detail'
+            } else {
+                include ('materi_content.php'); // Memuat 'materi_content.php' jika tidak ada parameter 'detail'
+            }
             ?>
         </div>
         <div class="tab-pane" id="tugas" role="tabpanel" aria-labelledby="tugas-tab" tabindex="0">
@@ -60,5 +64,4 @@
             ?>
         </div>
     </div>
-
 </div>

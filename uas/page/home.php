@@ -5,7 +5,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../bootstrap/css/bootstrap.min.css">
-
     <link rel="stylesheet" href="../bootstrap/bootstrap-icons/font/bootstrap-icons.min.css">
     <title>Home</title>
 </head>
@@ -66,25 +65,25 @@
         <div class="d-flex flex-grow-1 flex-column vh-100 overflow-auto" style="margin-left: 250px; padding-top:90px">
             <!-- Dynamic content will be loaded here -->
             <?php
-            if (isset($_GET['page'])) {
+            if (isset($_GET['page'])) { // Mengecek apakah parameter 'page' ada di URL
                 $page = $_GET['page'];
                 $allowed_pages = ['home_content', 'class_content'];
-                if (in_array($page, $allowed_pages)) {
-                    if ($page === 'class' && isset($_GET['id'])) {
+                if (in_array($page, $allowed_pages)) { // Memastikan 'page' adalah salah satu dari halaman yang diizinkan
+                    if ($page === 'class_content' && isset($_GET['id'])) { // Memeriksa apakah 'page' adalah 'class_content' dan memiliki parameter 'id'
                         $id = intval($_GET['id']);
-                        if ($id >= 1 && $id <= 3) {
+                        if ($id >= 1 && $id <= 3) { // Memastikan 'id' valid
                             include ('class_content.php');
                         } else {
                             echo '<h1>Class Not Found</h1><p>The class you are looking for does not exist.</p>';
                         }
                     } else {
-                        include ($page . '.php');
+                        include ($page . '.php'); // Memuat halaman yang sesuai
                     }
                 } else {
                     echo '<h1>Page Not Found</h1><p>The page you are looking for does not exist.</p>';
                 }
             } else {
-                include ('home_content.php');
+                include ('home_content.php'); // Memuat 'home_content' secara default
             }
             ?>
         </div>
