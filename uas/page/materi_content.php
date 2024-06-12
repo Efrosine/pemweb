@@ -56,7 +56,7 @@ $class_id = isset($_GET['class_id']) ? $_GET['class_id'] : 0; // Ambil ID kelas 
                         <input type="text" class="form-control" id="materi_dec" name="materi_dec" required>
                     </div>
                     <div class="mb-3">
-                        <label for="materi_file" class="form-label">Pilih File</label>
+                        <label for="materi_file" class="form-label">Pilih File Pendukung</label>
                         <input class="form-control" type="file" id="materi_file">
                     </div>
                 </form>
