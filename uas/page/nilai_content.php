@@ -42,9 +42,9 @@
                     for ($j = 0; $j < 10; $j++):
                         ?>
                         <tr>
-                            <th scope="row"><?php echo $j + 1; ?></th>
-                            <td><?php echo $names[$j]; ?></td>
-                            <?php for ($k = 1; $k <= 4; $k++): ?>
+                            <th scope="row"><?php echo $names[$j]; ?></th>
+
+                            <?php for ($k = 1; $k <= 5; $k++): ?>
                                 <td><?php echo rand(50, 100); ?></td>
                             <?php endfor; ?>
                         </tr>
@@ -60,14 +60,14 @@
             aria-modal="true" role="dialog" style="display: block;">
             <div class="modal-dialog modal-dialog-scrollable">
                 <div class="modal-content">
-                    <div class="modal-header">
-                        <h1 class="modal-title fs-5" id="penilaianModalLabel">Penilaian Tugas ID: <?php echo $tugas_id; ?>
-                        </h1>
-                        <form method="post" action="">
+                    <form method="post" action="">
+                        <div class="modal-header">
+                            <h1 class="modal-title fs-5" id="penilaianModalLabel">Penilaian Tugas ID:
+                                <?php echo $tugas_id; ?>
+                            </h1>
                             <button type="submit" name="close_modal" class="btn-close" aria-label="Close"></button>
-                        </form>
-
-                    </div>
+                        </div>
+                    </form>
                     <div class="modal-body">
                         <form method="post" action="">
                             <input type="hidden" name="tugas_id" value="<?php echo $tugas_id; ?>">
@@ -79,7 +79,6 @@
                                 </div>
                             <?php endforeach; ?>
                             <div class="modal-footer">
-
                                 <button type="submit" name="simpan_penilaian" class="btn btn-primary">Simpan</button>
                             </div>
                         </form>
