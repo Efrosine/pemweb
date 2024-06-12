@@ -52,9 +52,12 @@
                         aria-expanded="true" aria-controls="classDropdown">Kelas yang diikuti</a>
                     <div class="collapse show" id="classDropdown">
                         <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
-                            <li><a class="nav-link text-white" href="home.php?page=class_content&id=1">Class 1</a></li>
-                            <li><a class="nav-link text-white" href="home.php?page=class_content&id=2">Class 2</a></li>
-                            <li><a class="nav-link text-white" href="home.php?page=class_content&id=3">Class 3</a></li>
+                            <li><a class="nav-link text-white" href="home.php?page=class_content&class_id=1">Class 1</a>
+                            </li>
+                            <li><a class="nav-link text-white" href="home.php?page=class_content&class_id=2">Class 2</a>
+                            </li>
+                            <li><a class="nav-link text-white" href="home.php?page=class_content&class_id=3">Class 3</a>
+                            </li>
                         </ul>
                     </div>
                 </li>
@@ -69,9 +72,9 @@
                 $page = $_GET['page'];
                 $allowed_pages = ['home_content', 'class_content'];
                 if (in_array($page, $allowed_pages)) { // Memastikan 'page' adalah salah satu dari halaman yang diizinkan
-                    if ($page === 'class_content' && isset($_GET['id'])) { // Memeriksa apakah 'page' adalah 'class_content' dan memiliki parameter 'id'
-                        $id = intval($_GET['id']);
-                        if ($id >= 1 && $id <= 3) { // Memastikan 'id' valid
+                    if ($page === 'class_content' && isset($_GET['class_id'])) { // Memeriksa apakah 'page' adalah 'class_content' dan memiliki parameter 'class_id'
+                        $class_id = intval($_GET['class_id']);
+                        if ($class_id >= 1 && $class_id <= 3) { // Memastikan 'class_id' valid
                             include ('class_content.php');
                         } else {
                             echo '<h1>Class Not Found</h1><p>The class you are looking for does not exist.</p>';

@@ -31,10 +31,10 @@
     <div class="tab-content px-5 pt-4">
         <div class="tab-pane active" id="materi" role="tabpanel" aria-labelledby="materi-tab" tabindex="0">
             <?php
-            if (isset($_GET['detail'])) { // Memeriksa apakah ada parameter 'detail' di URL
-                include ('detail_materi.php'); // Memuat 'detail_materi.php' jika ada parameter 'detail'
+            if (isset($_GET['material_id'])) { // Memeriksa apakah ada parameter 'material_id' di URL
+                include ('detail_materi.php'); // Memuat 'detail_materi.php' jika ada parameter 'material_id'
             } else {
-                include ('materi_content.php'); // Memuat 'materi_content.php' jika tidak ada parameter 'detail'
+                include ('materi_content.php'); // Memuat 'materi_content.php' jika tidak ada parameter 'material_id'
             }
             ?>
         </div>
