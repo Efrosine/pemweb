@@ -13,7 +13,8 @@
     <nav class="navbar navbar-expand-lg bg-body-tertiary position-fixed w-100 z-3">
         <div class="container-fluid">
             <a class="navbar-brand" href="#">
-                <img src="#" alt="Logo" width="50" height="50" class="d-inline-block align-text-center">
+                <img src="../data/logo.png" alt="Logo" width="50" height="50"
+                    class="d-inline-block align-text-center rounded-circle">
                 KelassssRuum
             </a>
             <div class="d-flex justify-content-center flex-grow-1">
