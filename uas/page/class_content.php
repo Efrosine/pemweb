@@ -6,11 +6,11 @@
                 role="tab" aria-controls="materi" aria-selected="true">materi</button>
         </li>
         <li class="nav-item" role="presentation">
-            <button class="nav-link " id="tugas-tab" data-bs-toggle="tab" data-bs-target="#tugas" type="button"
+            <button class="nav-link" id="tugas-tab" data-bs-toggle="tab" data-bs-target="#tugas" type="button"
                 role="tab" aria-controls="tugas" aria-selected="false">tugas</button>
         </li>
         <li class="nav-item" role="presentation">
-            <button class="nav-link " id="kelompok-tab" data-bs-toggle="tab" data-bs-target="#kelompok" type="button"
+            <button class="nav-link" id="kelompok-tab" data-bs-toggle="tab" data-bs-target="#kelompok" type="button"
                 role="tab" aria-controls="kelompok" aria-selected="false">kelompok</button>
         </li>
         <li class="nav-item" role="presentation">
@@ -18,7 +18,7 @@
                 role="tab" aria-controls="forum" aria-selected="false">forum</button>
         </li>
         <li class="nav-item" role="presentation">
-            <button class="nav-link  " id="orang-tab" data-bs-toggle="tab" data-bs-target="#orang" type="button"
+            <button class="nav-link" id="orang-tab" data-bs-toggle="tab" data-bs-target="#orang" type="button"
                 role="tab" aria-controls="orang" aria-selected="false">orang</button>
         </li>
         <li class="nav-item" role="presentation">
@@ -31,19 +31,25 @@
     <div class="tab-content px-5 pt-4">
         <div class="tab-pane active" id="materi" role="tabpanel" aria-labelledby="materi-tab" tabindex="0">
             <?php
-            if (isset($_GET['material_id'])) { // Memeriksa apakah ada parameter 'material_id' di URL
-                include ('detail_materi.php'); // Memuat 'detail_materi.php' jika ada parameter 'material_id'
+            if (isset($_GET['material_id'])) {
+                include ('detail_materi.php');
             } else {
-                include ('materi_content.php'); // Memuat 'materi_content.php' jika tidak ada parameter 'material_id'
+                include ('materi_content.php');
             }
             ?>
         </div>
         <div class="tab-pane" id="tugas" role="tabpanel" aria-labelledby="tugas-tab" tabindex="0">
             <?php
-            include ('tugas_content.php');
+            if (isset($_GET['tugas_individu_id'])) {
+                include ('detail_tugas_individu.php'); // Memuat detail tugas individu
+            } elseif (isset($_GET['tugas_kelompok_id'])) {
+                include ('detail_tugas_kelompok.php'); // Memuat detail tugas kelompok
+            } else {
+                include ('tugas_content.php'); // Memuat daftar tugas
+            }
             ?>
         </div>
-        <div class="tab-pane " id="kelompok" role="tabpanel" aria-labelledby="kelompok-tab" tabindex="0">
+        <div class="tab-pane" id="kelompok" role="tabpanel" aria-labelledby="kelompok-tab" tabindex="0">
             <?php
             include ('kelompok_content.php');
             ?>
@@ -53,7 +59,7 @@
             include ('forum_content.php');
             ?>
         </div>
-        <div class="tab-pane " id="orang" role="tabpanel" aria-labelledby="orang-tab" tabindex="0">
+        <div class="tab-pane" id="orang" role="tabpanel" aria-labelledby="orang-tab" tabindex="0">
             <?php
             include ('orang_content.php');
             ?>
