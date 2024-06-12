@@ -9,7 +9,7 @@ $class_id = isset($_GET['class_id']) ? $_GET['class_id'] : 0; // Ambil ID kelas 
             <div class="me-3">
                 <h1>Detail Materi <?php echo $material_id; ?></h1>
             </div>
-            <h3>Nama dosen <?php echo $class_id; ?></h3>
+            <h3>Nama dosen (Kelas <?php echo $class_id; ?>)</h3>
         </div>
         <h4>keterangan</h4>
     </div>
