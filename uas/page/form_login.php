@@ -18,8 +18,8 @@
             <h1 class="text-center">Login</h1>
             </divcl>
             <div class="mb-3">
-                <label for="userId" class="form-label">UserId</label>
-                <input type="email" class="form-control" id="userId" placeholder="220605110152">
+                <label for="uuid" class="form-label">uuid</label>
+                <input type="number" class="form-control" id="uuid" placeholder="220605110152">
             </div>
             <div class="mb-3">
                 <label for="password" class="form-label">Password</label>
