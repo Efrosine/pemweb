@@ -9,7 +9,7 @@ $class_id = isset($_GET['class_id']) ? $_GET['class_id'] : 0;
                 <h1 class="me-auto">NmTugasIdv <?php $tugas_individu_id ?></h1>
                 <div>
                     <button type="button" class="btn btn-primary" data-bs-toggle="modal"
-                        data-bs-target="#tambahTugasiModal">
+                        data-bs-target="#editTugasidvModal">
                         <i class="bi bi-pencil"></i> Edit Tugas
                     </button>
                 </div>
@@ -65,12 +65,12 @@ $class_id = isset($_GET['class_id']) ? $_GET['class_id'] : 0;
 
 
 <!-- Modal -->
-<div class="modal fade" id="tambahTugasiModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
-    aria-labelledby="tambahTugasiModalLabel" aria-hidden="true">
+<div class="modal fade" id="editTugasidvModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+    aria-labelledby="editTugasiModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h1 class="modal-title fs-5" id="tambahTugasiModalLabel">Modal title</h1>
+                <h1 class="modal-title fs-5" id="editTugasiModalLabel">Edit Tugas</h1>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
@@ -87,11 +87,15 @@ $class_id = isset($_GET['class_id']) ? $_GET['class_id'] : 0;
                         <label for="tugas_file" class="form-label">Pilih File Pendukung</label>
                         <input class="form-control" type="file" id="tugas_file">
                     </div>
+                    <div class="mb-3">
+                        <label for="tugas_due_time" class="form-label">Due Date</label>
+                        <input type="date" class="form-control" id="tugas_due_time" name="tugas_due_time" required>
+                    </div>
                 </form>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary">Understood</button>
+                <button type="button" class="btn btn-primary">Simpan</button>
             </div>
         </div>
     </div>

@@ -66,6 +66,7 @@
                         <form method="post" action="">
                             <button type="submit" name="close_modal" class="btn-close" aria-label="Close"></button>
                         </form>
+
                     </div>
                     <div class="modal-body">
                         <form method="post" action="">
