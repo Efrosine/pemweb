@@ -16,7 +16,7 @@ $class_id = isset($_GET['class_id']) ? $_GET['class_id'] : 0; // Ambil ID kelas 
 </div>
 
 <div class="d-flex justify-content-center my-5">
-    <a href="home.php?page=class_content&class_id=<?php echo $class_id; ?>" class="btn btn-secondary">
+    <a href="home.php?page=class_content&class_id=<?php echo $class_id; ?>&tab=materi" class="btn btn-secondary">
         <i class="bi bi-arrow-left"></i> Kembali ke Daftar Materi
     </a>
 </div>
