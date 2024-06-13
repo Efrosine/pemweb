@@ -10,6 +10,8 @@ if (!$user) {
     exit();
 }
 
+$classes = getClassesByUserId($conn, $user['user_id']);
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (isset($_POST['logout'])) {
         logout();
@@ -28,6 +30,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
     }
 }
+
 ?>
 
 <!DOCTYPE html>
@@ -116,16 +119,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         aria-expanded="true" aria-controls="classDropdown">Kelas yang diikuti</a>
                     <div class="collapse show" id="classDropdown">
                         <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
-                            <li><a class="nav-link text-white" href="home.php?page=class_content&class_id=1">Class 1</a>
-                            </li>
-                            <li><a class="nav-link text-white" href="home.php?page=class_content&class_id=2">Class 2</a>
-                            </li>
-                            <li><a class="nav-link text-white" href="home.php?page=class_content&class_id=3">Class 3</a>
-                            </li>
+                            <?php foreach ($classes as $class): ?>
+                                <li><a class="nav-link text-white ms-3"
+                                        href="home.php?page=class_content&class_id=<?php echo htmlspecialchars($class['class_id']); ?>"><?php echo htmlspecialchars($class['name']); ?></a>
+                                </li>
+                            <?php endforeach; ?>
                         </ul>
                     </div>
                 </li>
             </ul>
+
         </div>
 
         <!-- Main Content -->
@@ -138,7 +141,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 if (in_array($page, $allowed_pages)) {
                     if ($page === 'class_content' && isset($_GET['class_id'])) {
                         $class_id = intval($_GET['class_id']);
-                        if ($class_id >= 1 && $class_id <= 3) {
+                        if ($class_id >= 1) {
                             include ('class_content.php');
                         } else {
                             echo '<h1>Class Not Found</h1><p>The class you are looking for does not exist.</p>';
