@@ -3,6 +3,7 @@ session_start();
 include '../db/koneksi.php';
 include 'function_class.php';
 include 'function_user.php';
+include 'function_material.php';
 
 $user = isAuthorized($conn);
 if (!$user) {

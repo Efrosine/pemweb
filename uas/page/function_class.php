@@ -86,5 +86,4 @@ if (!function_exists('getClassById')) {
         $stmt->close();
         return $class;
     }
-
 }
