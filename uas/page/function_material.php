@@ -41,3 +41,47 @@ if (!function_exists('getMaterialsByClassId')) {
     }
 }
 
+if (!function_exists('getMaterialById')) {
+    function getMaterialById($conn, $material_id)
+    {
+        $sql = "SELECT material.*, user.name as created_by 
+        FROM material 
+        JOIN user ON material.created_by = user.user_id 
+        WHERE material.material_id = ?";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("i", $material_id);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $material = $result->fetch_assoc();
+        $stmt->close();
+        return $material;
+    }
+}
+if (!function_exists('updateMaterial')) {
+    function updateMaterial($conn, $material_id, $title, $description, $file_path)
+    {
+        try {
+            if ($file_path) {
+                $sql = "UPDATE material SET title = ?, description = ?, file_path = ? WHERE material_id = ?";
+                $stmt = $conn->prepare($sql);
+                $stmt->bind_param("sssi", $title, $description, $file_path, $material_id);
+            } else {
+                $sql = "UPDATE material SET title = ?, description = ? WHERE material_id = ?";
+                $stmt = $conn->prepare($sql);
+                $stmt->bind_param("ssi", $title, $description, $material_id);
+            }
+
+            if ($stmt->execute()) {
+                $stmt->close();
+                return true;
+            } else {
+                $stmt->close();
+                return "Error: " . $conn->error;
+            }
+        } catch (Exception $e) {
+            return "Exception: " . $e->getMessage();
+        }
+    }
+}
+
+
