@@ -6,28 +6,28 @@ $tab = isset($_GET['tab']) ? $_GET['tab'] : 'materi'; // Ambil tab dari paramete
     <ul class="nav nav-tabs" id="myTab" role="tablist">
         <li class="nav-item" role="presentation">
             <a class="nav-link <?php echo ($tab == 'materi') ? 'active' : ''; ?>"
-                href="home.php?page=class_content&tab=materi&class_id=<?php echo $class_id; ?>" role="tab">materi</a>
+                href="home.php?page=class_content&class_id=<?php echo $class_id; ?>&tab=materi" role="tab">materi</a>
         </li>
         <li class="nav-item" role="presentation">
             <a class="nav-link <?php echo ($tab == 'tugas') ? 'active' : ''; ?>"
-                href="home.php?page=class_content&tab=tugas&class_id=<?php echo $class_id; ?>" role="tab">tugas</a>
+                href="home.php?page=class_content&class_id=<?php echo $class_id; ?>&tab=tugas" role="tab">tugas</a>
         </li>
         <li class="nav-item" role="presentation">
             <a class="nav-link <?php echo ($tab == 'kelompok') ? 'active' : ''; ?>"
-                href="home.php?page=class_content&tab=kelompok&class_id=<?php echo $class_id; ?>"
+                href="home.php?page=class_content&class_id=<?php echo $class_id; ?>&tab=kelompok"
                 role="tab">kelompok</a>
         </li>
         <li class="nav-item" role="presentation">
             <a class="nav-link <?php echo ($tab == 'forum') ? 'active' : ''; ?>"
-                href="home.php?page=class_content&tab=forum&class_id=<?php echo $class_id; ?>" role="tab">forum</a>
+                href="home.php?page=class_content&class_id=<?php echo $class_id; ?>&tab=forum" role="tab">forum</a>
         </li>
         <li class="nav-item" role="presentation">
             <a class="nav-link <?php echo ($tab == 'orang') ? 'active' : ''; ?>"
-                href="home.php?page=class_content&tab=orang&class_id=<?php echo $class_id; ?>" role="tab">orang</a>
+                href="home.php?page=class_content&class_id=<?php echo $class_id; ?>&tab=orang" role="tab">orang</a>
         </li>
         <li class="nav-item" role="presentation">
             <a class="nav-link <?php echo ($tab == 'nilai') ? 'active' : ''; ?>"
-                href="home.php?page=class_content&tab=nilai&class_id=<?php echo $class_id; ?>" role="tab">nilai</a>
+                href="home.php?page=class_content&class_id=<?php echo $class_id; ?>&tab=nilai" role="tab">nilai</a>
         </li>
     </ul>
 

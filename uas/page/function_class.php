@@ -70,3 +70,17 @@ if (!function_exists('getClassesByUserId')) {
         return $classes;
     }
 }
+
+if (!function_exists('getClassById')) {
+    function getClassById($conn, $class_id)
+    {
+        $sql = "SELECT * FROM class WHERE class_id = ?";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("i", $class_id);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $class = $result->fetch_assoc();
+        $stmt->close();
+        return $class;
+    }
+}

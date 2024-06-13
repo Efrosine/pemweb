@@ -11,6 +11,16 @@ if (!$user) {
 }
 
 $classes = getClassesByUserId($conn, $user['user_id']);
+// Include these lines after user authorization check
+$class_name = $user['name']; // Default to user name
+
+if (isset($_GET['page']) && $_GET['page'] === 'class_content' && isset($_GET['class_id'])) {
+    $class_id = intval($_GET['class_id']);
+    $class = getClassById($conn, $class_id); // Assume getClassById is a function that retrieves class details by ID
+    if ($class) {
+        $class_name = $class['name'];
+    }
+}
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (isset($_POST['logout'])) {
@@ -69,7 +79,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             </a>
             <div class="d-flex justify-content-center flex-grow-1">
                 <span class="navbar-text mx-auto">
-                    <?php echo htmlspecialchars($user['name']); ?>
+                    <?php echo htmlspecialchars($class_name); ?>
                 </span>
             </div>
             <div class="d-flex align-items-center">
