@@ -2,18 +2,18 @@
 $class_id = isset($_GET['class_id']) ? $_GET['class_id'] : 0; // Ambil ID kelas dari parameter GET
 ?>
 <div class="d-flex flex-column">
-    <div class="container bg-primary" style="border-radius: 24px;">
-        <div class="d-flex flex-column justify-content-start p-3">
+    <div class="container-fluid pt-5 pb-3" style="border-radius: 24px; border: 2px solid blue;">
+        <div class="d-flex flex-column justify-content-start px-3">
             <div class="d-flex align-items-end flex-row">
                 <div class="me-3">
-                    <h1>Nama kelas</h1>
+                    <h1><?php echo htmlspecialchars($class['name']); ?></h1>
                 </div>
                 <div class="me-auto">
-                    <h3>Nama dosen</h3>
+                    <h3><?php echo htmlspecialchars($class['created_by']); ?></h3>
                 </div>
-                <h3>Kode Kelas</h3>
+                <h3>Code : <?php echo htmlspecialchars($class['code']); ?></h3>
             </div>
-            <h4>keterangan</h4>
+            <h4 class="px-4"><?php echo htmlspecialchars($class['description']); ?></h4>
         </div>
     </div>
 

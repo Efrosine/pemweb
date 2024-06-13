@@ -1,5 +1,13 @@
 <?php
 $tab = isset($_GET['tab']) ? $_GET['tab'] : 'materi'; // Ambil tab dari parameter GET, default ke 'materi'
+
+include '../db/koneksi.php';
+include 'function_class.php';
+include 'function_user.php';
+
+$user = isAuthorized($conn);
+$class_id = intval($_GET['class_id']);
+$class = getClassById($conn, $class_id);
 ?>
 <div class="d-flex flex-column justify-content-start">
     <!-- Nav tabs -->

@@ -74,7 +74,10 @@ if (!function_exists('getClassesByUserId')) {
 if (!function_exists('getClassById')) {
     function getClassById($conn, $class_id)
     {
-        $sql = "SELECT * FROM class WHERE class_id = ?";
+        $sql = "SELECT class.class_id, class.name, class.description, class.code, user.name AS created_by, user.profile_pic 
+                FROM class 
+                JOIN user ON class.created_by = user.user_id 
+                WHERE class.class_id = ?";
         $stmt = $conn->prepare($sql);
         $stmt->bind_param("i", $class_id);
         $stmt->execute();
@@ -83,4 +86,5 @@ if (!function_exists('getClassById')) {
         $stmt->close();
         return $class;
     }
+
 }
