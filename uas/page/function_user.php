@@ -28,3 +28,25 @@ if (!function_exists('logout')) {
         exit();
     }
 }
+
+if (!function_exists('getUsersByRoleAndClass')) {
+    function getUsersByRoleAndClass($conn, $role, $class_id)
+    {
+        $users = [];
+        $sql = "SELECT user.user_id, user.name, user.profile_pic 
+                FROM user 
+                JOIN class_member ON user.user_id = class_member.user_id 
+                WHERE user.role = ? AND class_member.class_id = ?";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("si", $role, $class_id);
+        $stmt->execute();
+        $result = $stmt->get_result();
+
+        while ($row = $result->fetch_assoc()) {
+            $users[] = $row;
+        }
+
+        $stmt->close();
+        return $users;
+    }
+}
