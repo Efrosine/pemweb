@@ -75,3 +75,23 @@ if (!function_exists('updateTask')) {
     }
 }
 
+if (!function_exists('getTasksByClassId')) {
+    function getTasksByClassId($conn, $class_id)
+    {
+        $tasks = [];
+        $sql = "SELECT task_id, title, due_time, type FROM task WHERE class_id = ?";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("i", $class_id);
+        $stmt->execute();
+        $result = $stmt->get_result();
+
+        while ($row = $result->fetch_assoc()) {
+            $tasks[] = $row;
+        }
+
+        $stmt->close();
+        return $tasks;
+    }
+}
+
+

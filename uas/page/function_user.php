@@ -70,4 +70,43 @@ if (!function_exists('getGroupIdByUserId')) {
     }
 }
 
+if (!function_exists('getStudentsByClassId')) {
+    function getStudentsByClassId($conn, $class_id)
+    {
+        $students = [];
+        $sql = "SELECT u.user_id, u.name 
+                FROM user u
+                JOIN class_member cm ON u.user_id = cm.user_id
+                WHERE cm.class_id = ? AND u.role = 'student'";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("i", $class_id);
+        $stmt->execute();
+        $result = $stmt->get_result();
+
+        while ($row = $result->fetch_assoc()) {
+            $students[] = $row;
+        }
+
+        $stmt->close();
+        return $students;
+    }
+}
+
+if (!function_exists('getGradeValue')) {
+    function getGradeValue($conn, $user_id, $task_id)
+    {
+        $grade = '';
+        $sql = "SELECT grade FROM grade WHERE user_id = ? AND task_id = ?";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("ii", $user_id, $task_id);
+        $stmt->execute();
+        $stmt->bind_result($grade);
+        $stmt->fetch();
+        $stmt->close();
+
+        return $grade ? $grade : 0;
+    }
+}
+
+
 

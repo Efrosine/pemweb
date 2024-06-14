@@ -116,3 +116,18 @@ if (!function_exists('getGroupGrade')) {
     }
 }
 
+if (!function_exists('getSubmissionDetails')) {
+    function getSubmissionDetails($conn, $task_id, $user_id)
+    {
+        $sql = "SELECT * FROM submission WHERE task_id = ? AND user_id = ?";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("ii", $task_id, $user_id);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $submission = $result->fetch_assoc();
+        $stmt->close();
+        return $submission;
+    }
+}
+
+
