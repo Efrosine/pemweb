@@ -50,3 +50,24 @@ if (!function_exists('getUsersByRoleAndClass')) {
         return $users;
     }
 }
+
+if (!function_exists('getGroupIdByUserId')) {
+    function getGroupIdByUserId($conn, $user_id)
+    {
+        $group_id = '';
+        $sql = "SELECT sgm.study_group_id 
+                FROM study_group_member sgm
+                JOIN study_group sg ON sgm.study_group_id = sg.study_group_id
+                WHERE sgm.user_id = ?";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("i", $user_id);
+        $stmt->execute();
+        $stmt->bind_result($group_id);
+        $stmt->fetch();
+        $stmt->close();
+
+        return $group_id;
+    }
+}
+
+
