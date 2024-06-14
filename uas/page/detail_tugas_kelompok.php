@@ -1,27 +1,13 @@
 <?php
 include ('function_task.php');
-include ('function_submission.php');
-include ('function_discussion.php');
-
 $tugas_kelompok_id = isset($_GET['tugas_kelompok_id']) ? $_GET['tugas_kelompok_id'] : 0;
 $class_id = isset($_GET['class_id']) ? $_GET['class_id'] : 0;
 $task_details = getTaskDetails($conn, $tugas_kelompok_id);
-$user_id = $_SESSION['user_id'];
 $user_role = $_SESSION['role'];
-
-$submission = getGroupSubmission($conn, $user_id, $tugas_kelompok_id);
-$grade = getGroupGrade($conn, $submission ? $submission['stdy_group_submission_id'] : 0);
-$status = 'untracked';
-if ($submission) {
-    $status = $grade ? 'done' : 'waiting';
-}
-
-$group_id = getGroupIdByUserIdAndClassId($conn, $user_id, $class_id);
-$group_discussions = getGroupDiscussions($conn, $group_id);
 ?>
 
 <div class="d-flex">
-    <div class="d-flex flex-column flex-grow-1">
+    <ddiv class="d-flex flex-column flex-grow-1">
         <div class="flex-grow-1">
             <div class="d-flex">
                 <div class="d-flex flex-column flex-grow-1">
@@ -57,20 +43,18 @@ $group_discussions = getGroupDiscussions($conn, $group_id);
 
             <div>
                 <div class="d-flex flex-column align-items-center justify-content-center">
-                    <form action="action_upload_submission.php" method="post" enctype="multipart/form-data">
-                        <input type="hidden" name="task_id" value="<?php echo $tugas_kelompok_id; ?>">
-                        <input type="hidden" name="user_id" value="<?php echo $user_id; ?>">
-                        <input type="hidden" name="class_id" value="<?php echo $class_id; ?>">
+                    <form action="">
                         <div class="mb-3">
                             <label for="upload_file" class="form-label">Upload File</label>
-                            <input class="form-control" type="file" id="upload_file" name="upload_file">
+                            <input class="form-control" type="file" id="upload_file">
                         </div>
-                        <button type="submit" class="btn btn-primary">Kirim</button>
+
+                        <button type="button" class="btn btn-primary">Kirim</button>
                     </form>
                 </div>
             </div>
         </div>
-    </div>
+    </ddiv>
     <div class="d-flex flex-column flex-shrink-1 ms-4" style="width: 250px;">
         <h2>Nilai</h2>
         <hr>
@@ -82,14 +66,13 @@ $group_discussions = getGroupDiscussions($conn, $group_id);
                 <p>Feedback</p>
             </div>
             <div class="d-flex flex-column flex-shrink-1 px-2 text-wrap">
-                <p><?php echo $status ? htmlspecialchars($status) : 'untracked'; ?></p>
-                <p><?php echo $grade ? htmlspecialchars($grade['grade']) : '-'; ?></p>
-                <p><?php echo $grade ? htmlspecialchars($grade['evaluator_name']) : '-'; ?></p>
-                <p class="text-break"><?php echo $grade ? htmlspecialchars($grade['feedback']) : '-'; ?></p>
+                <p>none</p>
+                <p>100/100</p>
+                <p>Fajar Triatmojo</p>
+                <p class="text-break">faskldjf;askldfj;asvmkdjrfvsaefjaseirfkjamoprmaes</p>
             </div>
         </div>
     </div>
-
 </div>
 <div class="d-flex my-5">
     <a href="home.php?page=class_content&class_id=<?php echo $class_id; ?>&tab=tugas" class="btn btn-secondary">
@@ -98,29 +81,22 @@ $group_discussions = getGroupDiscussions($conn, $group_id);
 </div>
 
 <div class="d-flex flex-column">
-    <?php foreach ($group_discussions as $discussion): ?>
-        <div class="m-3 p-3" style="border: 2px solid gray; border-radius: 24px;">
-            <div class="d-flex flex-column">
-                <h4><?php echo htmlspecialchars($discussion['name']); ?></h4>
-                <div class="d-flex">
-                    <h5 class="flex-grow-1"><?php echo htmlspecialchars($discussion['content']); ?></h5>
-                    <h5><?php echo htmlspecialchars($discussion['created_at']); ?></h5>
-                </div>
+    <div class="m-3 p-3" style="border: 2px solid gray; border-radius: 24px;">
+        <div class="d-flex flex-column">
+            <h4>nama</h4>
+            <div class="d-flex">
+                <h5 class="flex-grow-1">pesan</h5>
+                <h5>tgl</h5>
             </div>
         </div>
-    <?php endforeach; ?>
-</div>
-
-<div class="position-fixed mx-5 mb-5" style="bottom: 0; left: 250; width: 70%;">
-    <form action="action_add_group_discussion.php" method="post">
-        <input type="hidden" name="group_id" value="<?php echo $group_id; ?>">
-        <input type="hidden" name="user_id" value="<?php echo $user_id; ?>">
+    </div>
+    <div class="position-fixed mx-5 mb-5" style="bottom: 0; left: 250; width: 70%;">
         <div class="input-group mb-3">
-            <input type="text" class="form-control border-primary px-3 py-2" name="content" placeholder="Tulis pesan"
-                aria-label="Tulis Pesan" aria-describedby="button-addon2" required>
-            <button class="btn btn-primary" type="submit" id="btn-kirim">Kirim</button>
+            <input type="text" class="form-control border-primary px-3 py-2" placeholder="Tulis pesan"
+                aria-label="Tulis Pesan" aria-describedby="button-addon2">
+            <button class="btn btn-primary" type="button" id="btn-kirim">Button</button>
         </div>
-    </form>
+    </div>
 </div>
 
 

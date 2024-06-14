@@ -1,22 +1,12 @@
 <?php
 include ('function_task.php');
-include ('function_submission.php');
-
 $tugas_individu_id = isset($_GET['tugas_individu_id']) ? $_GET['tugas_individu_id'] : 0;
 $class_id = isset($_GET['class_id']) ? $_GET['class_id'] : 0;
 $task_details = getTaskDetails($conn, $tugas_individu_id);
-$user_id = $_SESSION['user_id'];
 $user_role = $_SESSION['role'];
-
-$submission = getSubmission($conn, $user_id, $tugas_individu_id);
-$grade = getGrade($conn, $submission ? $submission['submission_id'] : 0);
-$status = 'untracked';
-if ($submission) {
-    $status = $grade ? 'done' : 'waiting';
-}
 ?>
 <div class="d-flex">
-    <div class="d-flex flex-column flex-grow-1">
+    <ddiv class="d-flex flex-column flex-grow-1">
         <div class="flex-grow-1">
             <div class="d-flex">
                 <div class="d-flex flex-column flex-grow-1">
@@ -52,20 +42,18 @@ if ($submission) {
 
             <div>
                 <div class="d-flex flex-column align-items-center justify-content-center">
-                    <form action="action_upload_submission.php" method="post" enctype="multipart/form-data">
-                        <input type="hidden" name="task_id" value="<?php echo $tugas_individu_id; ?>">
-                        <input type="hidden" name="user_id" value="<?php echo $user_id; ?>">
-                        <input type="hidden" name="class_id" value="<?php echo $class_id; ?>">
+                    <form action="">
                         <div class="mb-3">
                             <label for="upload_file" class="form-label">Upload File</label>
-                            <input class="form-control" type="file" id="upload_file" name="upload_file">
+                            <input class="form-control" type="file" id="upload_file">
                         </div>
-                        <button type="submit" class="btn btn-primary">Kirim</button>
+
+                        <button type="button" class="btn btn-primary">Kirim</button>
                     </form>
                 </div>
             </div>
         </div>
-    </div>
+    </ddiv>
     <div class="d-flex flex-column flex-shrink-1 ms-4" style="width: 250px;">
         <h2>Nilai</h2>
         <hr>
@@ -77,14 +65,13 @@ if ($submission) {
                 <p>Feedback</p>
             </div>
             <div class="d-flex flex-column flex-shrink-1 px-2 text-wrap">
-                <p><?php echo $status ? htmlspecialchars($status) : 'untracked'; ?></p>
-                <p><?php echo $grade ? htmlspecialchars($grade['grade']) : '-'; ?></p>
-                <p><?php echo $grade ? htmlspecialchars($grade['evaluator_name']) : '-'; ?></p>
-                <p class="text-break"><?php echo $grade ? htmlspecialchars($grade['feedback']) : '-'; ?></p>
+                <p>none</p>
+                <p>100/100</p>
+                <p>Fajar Triatmojo</p>
+                <p class="text-break">faskldjf;askldfj;asvmkdjrfvsaefjaseirfkjamoprmaes</p>
             </div>
         </div>
     </div>
-
 </div>
 <div class="d-flex my-5">
     <a href="home.php?page=class_content&class_id=<?php echo $class_id; ?>&tab=tugas" class="btn btn-secondary">
