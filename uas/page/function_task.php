@@ -40,3 +40,38 @@ if (!function_exists('addTask')) {
         }
     }
 }
+
+if (!function_exists('getTaskDetails')) {
+    function getTaskDetails($conn, $task_id)
+    {
+        $sql = "SELECT t.*, u.name as created_by_name 
+                FROM task t 
+                JOIN user u ON t.created_by = u.user_id 
+                WHERE t.task_id = ?";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("i", $task_id);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $task = $result->fetch_assoc();
+        $stmt->close();
+        return $task;
+    }
+}
+
+if (!function_exists('updateTask')) {
+    function updateTask($conn, $task_id, $title, $description, $type, $due_time)
+    {
+        $sql = "UPDATE task SET title = ?, description = ?, type = ?, due_time = ? WHERE task_id = ?";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("ssssi", $title, $description, $type, $due_time, $task_id);
+
+        if ($stmt->execute()) {
+            $stmt->close();
+            return true;
+        } else {
+            $stmt->close();
+            return false;
+        }
+    }
+}
+

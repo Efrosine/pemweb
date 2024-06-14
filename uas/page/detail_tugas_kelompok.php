@@ -1,29 +1,45 @@
 <?php
+include ('function_task.php');
 $tugas_kelompok_id = isset($_GET['tugas_kelompok_id']) ? $_GET['tugas_kelompok_id'] : 0;
 $class_id = isset($_GET['class_id']) ? $_GET['class_id'] : 0;
+$task_details = getTaskDetails($conn, $tugas_kelompok_id);
+$user_role = $_SESSION['role'];
 ?>
 
 <div class="d-flex">
     <ddiv class="d-flex flex-column flex-grow-1">
         <div class="flex-grow-1">
             <div class="d-flex">
-                <h1 class="me-auto">NmTugasKlm <?php $tugas_kelompok_id ?></h1>
-                <div>
-                    <button type="button" class="btn btn-primary" data-bs-toggle="modal"
-                        data-bs-target="#editTugasklmpModal">
-                        <i class="bi bi-pencil"></i> Edit Tugas
-                    </button>
+                <div class="d-flex flex-column flex-grow-1">
+                    <div class="flex-grow-1">
+                        <div class="d-flex">
+                            <h1 class="me-auto"><?php echo htmlspecialchars($task_details['title']); ?></h1>
+                            <?php if ($user_role == 'teacher'): ?>
+                                <div>
+                                    <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                                        data-bs-target="#editTugasModal">
+                                        <i class="bi bi-pencil"></i> Edit Tugas
+                                    </button>
+                                </div>
+                            <?php endif; ?>
+                        </div>
+                        <div class="d-flex">
+                            <h4 class="mt-auto mb-0"><?php echo htmlspecialchars($task_details['created_by_name']); ?>
+                            </h4>
+                            <p class="ms-3 me-auto mb-0 mt-auto">
+                                <?php echo htmlspecialchars($task_details['created_at']); ?>
+                            </p>
+                            <p class="mb-0 mt-auto">Tenggat: <?php echo htmlspecialchars($task_details['due_time']); ?>
+                            </p>
+                        </div>
+                        <hr>
+                        <div class="mb-5">
+                            <p><?php echo htmlspecialchars($task_details['description']); ?></p>
+                        </div>
+                    </div>
                 </div>
             </div>
-            <div class="d-flex">
-                <h4 class="mt-auto mb-0">nmDosen</h4>
-                <p class="ms-3 me-auto mb-0 mt-auto">Tanggal</p>
-                <p class="mb-0 mt-auto">Tenggat : 12-12-12</p>
-            </div>
-            <hr>
-            <div class="mb-5">
-                <p>Petunjuk Tugas</p>
-            </div>
+
 
             <div>
                 <div class="d-flex flex-column align-items-center justify-content-center">

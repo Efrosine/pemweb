@@ -55,15 +55,20 @@ if ($type_filter == 'individual') {
         <?php foreach ($tasks as $task): ?>
             <div class="m-3 p-3" style="border: 2px solid gray; border-radius: 24px;">
                 <div class="d-flex flex-column justify-content-start">
-                    <a href="home.php?page=class_content&tab=tugas&class_id=<?php echo $class_id; ?>&task_id=<?php echo $task['task_id']; ?>"
-                        class="text-decoration-none text-dark">
-                        <h3><?php echo htmlspecialchars($task['title']); ?></h3>
-                        <h4><?php echo htmlspecialchars($task['due_time']); ?></h4>
-                        <hr>
-                        <div class="p-3">
-                            <h5><?php echo htmlspecialchars($task['description']); ?></h5>
-                        </div>
-                    </a>
+                    <?php if ($task['type'] == 'individual'): ?>
+                        <a href="home.php?page=class_content&tab=tugas&class_id=<?php echo $class_id; ?>&tugas_individu_id=<?php echo $task['task_id']; ?>"
+                            class="text-decoration-none text-dark">
+                        <?php else: ?>
+                            <a href="home.php?page=class_content&tab=tugas&class_id=<?php echo $class_id; ?>&tugas_kelompok_id=<?php echo $task['task_id']; ?>"
+                                class="text-decoration-none text-dark">
+                            <?php endif; ?>
+                            <h3><?php echo htmlspecialchars($task['title']); ?></h3>
+                            <h4><?php echo htmlspecialchars($task['due_time']); ?></h4>
+                            <hr>
+                            <div class="p-3">
+                                <h5><?php echo htmlspecialchars($task['description']); ?></h5>
+                            </div>
+                        </a>
                 </div>
             </div>
         <?php endforeach; ?>
