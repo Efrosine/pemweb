@@ -3,16 +3,15 @@ $class_id = isset($_GET['class_id']) ? $_GET['class_id'] : 0; // Ambil ID kelas 
 ?>
 <div class="d-flex flex-column">
     <div class="d-flex justify-content-center">
-        <div class="dropdown">
-            <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown"
-                aria-expanded="false">
-                Semua Tugas
-            </button>
-            <ul class="dropdown-menu">
-                <li><a class="dropdown-item" href="#">Semua Tugas</a></li>
-                <li><a class="dropdown-item" href="#">Tugas Individu</a></li>
-                <li><a class="dropdown-item" href="#">Tugas Kelompok</a></li>
-            </ul>
+        <div class="btn-group" role="group" aria-label="button group">
+            <input type="radio" class="btn-check" name="btnradio" id="btsemua" autocomplete="off" checked>
+            <label class="btn btn-outline-primary" for="btsemua">Semua</label>
+
+            <input type="radio" class="btn-check" name="btnradio" id="btidv" autocomplete="off">
+            <label class="btn btn-outline-primary" for="btidv">Individu</label>
+
+            <input type="radio" class="btn-check" name="btnradio" id="btklmp" autocomplete="off">
+            <label class="btn btn-outline-primary" for="btklmp">Kelompok</label>
         </div>
         <button type="button" class="btn btn-primary ms-5" data-bs-toggle="modal" data-bs-target="#tambahTugasiModal">
             <i class="bi bi-plus"></i>Tambah Tugas

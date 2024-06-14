@@ -71,3 +71,28 @@ if (!function_exists('addGroup')) {
         }
     }
 }
+
+if (!function_exists('getStudentsWithoutGroups')) {
+    function getStudentsWithoutGroups($conn, $class_id)
+    {
+        $sql = "SELECT u.user_id, u.name, u.profile_pic 
+            FROM user u
+            LEFT JOIN study_group_member sgm ON u.user_id = sgm.user_id
+            LEFT JOIN study_group sg ON sgm.study_group_id = sg.study_group_id
+            WHERE u.role = 'student' AND (sg.class_id IS NULL OR sg.class_id != ?)
+            AND u.user_id NOT IN (SELECT sgm.user_id 
+                                  FROM study_group_member sgm 
+                                  JOIN study_group sg ON sgm.study_group_id = sg.study_group_id 
+                                  WHERE sg.class_id = ?)";
+
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("ii", $class_id, $class_id);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $students = $result->fetch_all(MYSQLI_ASSOC);
+        $stmt->close();
+
+        return $students;
+    }
+
+}

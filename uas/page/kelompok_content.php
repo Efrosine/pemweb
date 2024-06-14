@@ -7,7 +7,7 @@ include 'function_group.php';
 $class_id = isset($_GET['class_id']) ? $_GET['class_id'] : 0;
 
 $groups = getGroupsByClassId($conn, $class_id);
-$students = getUsersByRoleAndClass($conn, 'student', $class_id);
+$students = getStudentsWithoutGroups($conn, $class_id);
 $error_msg = $_GET['error'] ?? '';
 ?>
 <!-- Error Message Alert -->
@@ -58,7 +58,6 @@ $error_msg = $_GET['error'] ?? '';
     <?php endforeach; ?>
 </div>
 
-<!-- Modal -->
 <div class="modal fade" id="tambahKelompokModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
     aria-labelledby="tambahKelompokModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg modal-dialog-scrollable">

@@ -226,6 +226,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     </div>
 
     <script src="../bootstrap/js/popper.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.9.3/umd/popper.min.js"
+        integrity="sha384-eJ3tzG6txP3pIQYSpuF3J5g8o/hU/Ce6uB5hUAZTLbsNfEL8A0xl3ajGz9lF7MkR"
+        crossorigin="anonymous"></script>
     <script src="../bootstrap/js/bootstrap.bundle.min.js"></script>
 </body>
 
