@@ -96,3 +96,24 @@ if (!function_exists('getStudentsWithoutGroups')) {
     }
 
 }
+
+include '../db/koneksi.php';
+
+if (!function_exists('isStudentInGroup')) {
+    function isStudentInGroup($conn, $user_id, $class_id)
+    {
+        $sql = "SELECT COUNT(*) as count
+                FROM study_group_member sgm
+                JOIN study_group sg ON sgm.study_group_id = sg.study_group_id
+                WHERE sgm.user_id = ? AND sg.class_id = ?";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("ii", $user_id, $class_id);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $row = $result->fetch_assoc();
+        $stmt->close();
+
+        return $row['count'] > 0;
+    }
+}
+
