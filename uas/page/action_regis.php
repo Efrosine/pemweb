@@ -15,7 +15,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $allowed_types = ['image/jpeg', 'image/png', 'image/gif'];
         if (in_array($_FILES['profile_pic']['type'], $allowed_types)) {
             $profile_pic = '../data/profilepic/' . basename($_FILES['profile_pic']['name']);
-            move_uploaded_file($_FILES['profile_pic']['tmp_name'], '../' . $profile_pic);
+            move_uploaded_file($_FILES['profile_pic']['tmp_name'], $profile_pic);
         } else {
             $error_msg = "File yang diupload harus berupa gambar.";
         }
