@@ -8,8 +8,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $task_desc = $conn->real_escape_string($_POST['task_desc']);
     $task_type = $_POST['task_type'];
     $task_due_time = $_POST['task_due_time'];
+    $created_by = $_POST['user_id'];
 
-    $result = addTask($conn, $class_id, $task_title, $task_desc, $task_type, $task_due_time);
+    $result = addTask($conn, $class_id, $task_title, $task_desc, $task_type, $task_due_time, $created_by);
 
     if ($result === true) {
         header("Location: home.php?page=class_content&class_id=$class_id&tab=tugas");

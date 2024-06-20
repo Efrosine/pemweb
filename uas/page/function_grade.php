@@ -14,6 +14,21 @@ if (!function_exists('getGrade')) {
         return $grade ? $grade : 0;
     }
 }
+if (!function_exists('getGradeBySubmissionId')) {
+    function getGradeBySubmissionId($conn, $submission_id)
+    {
+        $grade = '';
+        $sql = "SELECT grade FROM grade WHERE  submission_id = ?";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("i", $submission_id);
+        $stmt->execute();
+        $stmt->bind_result($grade);
+        $stmt->fetch();
+        $stmt->close();
+
+        return $grade ? $grade : 0;
+    }
+}
 
 if (!function_exists('getGradeFeedback')) {
     function getGradeFeedback($conn, $user_id, $submission_id)

@@ -47,6 +47,50 @@ if (!function_exists('joinClass')) {
         }
     }
 }
+if (!function_exists('getClassMembers')) {
+    function getClassMembers($conn, $class_id)
+    {
+        // Query untuk mendapatkan data anggota kelas kecuali guru
+        $sql = "SELECT user.name 
+                FROM user 
+                JOIN class_member ON user.user_id = class_member.user_id 
+                WHERE class_member.class_id = ? AND user.role != 'teacher'";
+
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("i", $class_id);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $names = [];
+
+        if ($result->num_rows > 0) {
+            while ($row = $result->fetch_assoc()) {
+                $names[] = $row['name'];
+            }
+        }
+
+        $stmt->close();
+        return $names;
+    }
+}
+
+
+if (!function_exists('getClassGroup')) {
+    function getClassGroup($conn, $class_id)
+    {
+        $sql = "SELECT sg.name
+                FROM study_group sg
+                JOIN class c ON sg.class_id = c.class_id
+                WHERE sg.class_id = 6";
+        $stmt = $conn->prepare($sql);
+        // $stmt->bind_param("i", $class_id);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $group = $result->fetch_assoc();
+        $stmt->close();
+        return $group;
+    }
+}
+
 
 if (!function_exists('getClassesByUserId')) {
     function getClassesByUserId($conn, $user_id)

@@ -1,11 +1,53 @@
 <?php
+// Include file function_nilai.php
+include 'function_nilai.php';
 include '../db/koneksi.php';
-include 'function_grade.php';
-include 'function_study_group_grade.php';
-include 'function_submission.php';
-include 'function_group.php';
-include 'function_user.php';
+include 'function_class.php';
+
+// Ambil class_id dari URL
+$class_id = isset($_GET['class_id']) ? $_GET['class_id'] : 0;
+
+// Panggil fungsi untuk mendapatkan data anggota kelas
+$student = getClassMembers($conn, $class_id);
+$group = getClassGroup($conn, $class_id);
+
+
+
+
+$groupTasks = array_filter($tasks, function ($task) {
+    return $task['type'] === 'group';
+});
+
+$individualTasks = array_filter($tasks, function ($task) {
+    return $task['type'] === 'individual';
+});
+
+function getGradeBySubmission($conn, $user_id, $task_id)
+{
+    $grade = '';
+    $sql = "SELECT g.grade FROM grade g JOIN submission s ON g.submission_id = s.submission_id WHERE s.user_id = ? AND s.task_id = ?";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("ii", $user_id, $task_id);
+    $stmt->execute();
+    $stmt->bind_result($grade);
+    $stmt->fetch();
+    return $grade ? $grade : 0;
+}
+function getGroupGradeBySubmission($conn, $user_id, $task_id)
+{
+    $grade = '';
+    $sql = "SELECT g.grade FROM grade g JOIN submission s ON g.submission_id = s.submission_id WHERE s.user_id = ? AND s.task_id = ?";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("ii", $user_id, $task_id);
+    $stmt->execute();
+    $stmt->bind_result($grade);
+    $stmt->fetch();
+    return $grade ? $grade : 0;
+}
+
+
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -24,143 +66,98 @@ include 'function_user.php';
 </head>
 
 <body>
-    <?php
-    $class_id = $_GET['class_id'];
-    $students = getStudentsByClassId($conn, $class_id);
-    $tugas = getTasksByClassId($conn, $class_id);
+    <div class="d-flex flex-column">
 
-    ?>
-    <div class="table-responsive">
-        <table class="table table-bordered">
-            <thead>
-                <tr>
-                    <th scope="col">Nama</th>
-                    <?php foreach ($tugas as $task): ?>
-                        <th scope="col">
-                            <div>
-                                <?php if ($_SESSION['role'] == 'teacher'): ?>
-                                    <form method="post" action="">
-                                        <button type="submit" name="tugas_id" value="<?php echo $task['task_id']; ?>"
-                                            class="btn btn-link p-0 m-0 align-baseline" data-bs-toggle="modal"
-                                            data-bs-target="#penilaianModal_<?php echo $task['task_id']; ?>">
-                                            <?php echo htmlspecialchars($task['title']); ?>
-                                        </button>
-                                    </form>
-                                <?php else: ?>
-                                    <?php echo htmlspecialchars($task['title']); ?>
-                                <?php endif; ?>
-                            </div>
-                            <small><?php echo htmlspecialchars($task['due_time']); ?></small>
-                        </th>
-                    <?php endforeach; ?>
-                </tr>
-            </thead>
-            <tbody>
-                <?php foreach ($students as $student): ?>
+        <div class="table-responsive">
+            <table class="table table-bordered">
+                <thead>
                     <tr>
-                        <th scope="row"><?php echo htmlspecialchars($student['name']); ?></th>
-                        <?php foreach ($tugas as $task): ?>
-                            <?php
-                            $submission = getSubmission($conn, $student['user_id'], $task['task_id']);
-                            if ($task['type'] == 'individual'):
-                                $grade = $submission ? getGrade($conn, $student['user_id'], $submission['submission_id']) : 0;
-                            else:
-                                $group_id = getGroupIdByUserIdAndClassId($conn, $student['user_id'], $class_id);
-                                $group_submission = $group_id ? getGroupSubmission($conn, $group_id, $task['task_id']) : null;
-                                $grade = $group_submission ? getStudyGroupGrade($conn, $student['user_id'], $group_submission['study_group_submission_id']) : '-';
-                            endif;
-                            ?>
-                            <td><?php echo $grade; ?></td>
+                        <th scope="col">Nama (Indi)</th>
+                        <?php foreach ($individualTasks as $task): ?>
+                            <th scope="col">
+                                <div>
+                                    <form method="post" action="">
+                                        <input type="hidden" name="tugas_name" value="<?php echo $task['title']; ?>">
+                                        <button type="submit" name="tugas_id" value="<?php echo $task['task_id']; ?>"
+                                            class="btn btn-link p-0 m-0 align-baseline"><?php echo htmlspecialchars($task['title']); ?></button>
+                                    </form>
+                                </div>
+                            </th>
+
                         <?php endforeach; ?>
                     </tr>
-                <?php endforeach; ?>
-            </tbody>
-        </table>
+                </thead>
+                <tbody>
+                    <?php foreach ($students as $student): ?>
+                        <tr>
+                            <th scope="row"><?php echo htmlspecialchars($student['name']); ?></th>
+                            <?php foreach ($individualTasks as $task): ?>
+                                <td><?php echo getGradeBySubmission($conn, $student['user_id'], $task['task_id']); ?></td>
+                            <?php endforeach; ?>
+                        </tr>
+                    <?php endforeach; ?>
+                </tbody>
+        </div>
+
+        <div class="table-responsive">
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th scope="col">Nama Kel</th>
+                        <?php foreach ($groupTasks as $task): ?>
+                            <th scope="col">
+                                <div>
+                                    <form method="post" action="">
+                                        <button type="submit" name="tugas_id" value="<?php echo $task['task_id']; ?>"
+                                            class="btn btn-link p-0 m-0 align-baseline"><?php echo htmlspecialchars($task['title']); ?></button>
+                                    </form>
+                                </div>
+                            </th>
+
+                        <?php endforeach; ?>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php foreach ($group as $gc): ?>
+                        <tr>
+                            <th scope="row"><?php echo htmlspecialchars($group['name']); ?></th>
+                        </tr>
+                    <?php endforeach; ?>
+                </tbody>
+
+        </div>
     </div>
 
-    <?php if (isset($_POST['tugas_id']) && $_SESSION['role'] == 'teacher'): ?>
-        <?php $tugas_id = $_POST['tugas_id']; ?>
+    <?php if (isset($_POST['tugas_id'])): ?>
+        <?php $tugas_id = $_POST['tugas_id'];
+        $tugas_name = $_POST['tugas_name'] ?>
+
         <div class="modal fade show" id="penilaianModal" tabindex="-1" aria-labelledby="penilaianModalLabel"
-            aria-hidden="true" style="display: block;">
+            aria-modal="true" role="dialog" style="display: block;">
             <div class="modal-dialog modal-dialog-scrollable">
                 <div class="modal-content">
-                    <form method="post" action="action_update_grade.php">
+                    <form method="post" action="">
                         <div class="modal-header">
-                            <h1 class="modal-title fs-5" id="penilaianModalLabel">Penilaian Tugas ID:
-                                <?php echo $tugas_id; ?>
+                            <h1 class="modal-title fs-5" id="penilaianModalLabel">Penilaian Tugas :
+                                <?php echo $tugas_name; ?>
                             </h1>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            <button type="submit" name="close_modal" class="btn-close" aria-label="Close"></button>
                         </div>
-                        <div class="modal-body">
+                    </form>
+                    <div class="modal-body">
+                        <form method="post" action="action_save_grade.php">
                             <input type="hidden" name="tugas_id" value="<?php echo $tugas_id; ?>">
+                            <input type="hidden" name="teacher_id" value="<?php echo $_SESSION['user_id']; ?>">
                             <?php foreach ($students as $student): ?>
-                                <?php
-                                $submission = getSubmission($conn, $student['user_id'], $tugas_id);
-                                $grade = $submission ? getGradeDetails($conn, $submission['submission_id']) : null;
-                                $grade_value = $grade ? $grade['grade'] : 0;
-                                $feedback = $grade ? htmlspecialchars($grade['feedback'] ?? '-') : '-';
-                                ?>
                                 <div class="mb-3">
+                                    <input type="hidden" name="class_id" value="<?php echo $class_id; ?>">
                                     <label for="nilai_<?php echo $student['user_id']; ?>"
                                         class="form-label"><?php echo $student['name']; ?></label>
                                     <input type="number" class="form-control" id="nilai_<?php echo $student['user_id']; ?>"
                                         name="nilai[<?php echo $student['user_id']; ?>]" min="0" max="100"
-                                        value="<?php echo $grade_value; ?>">
-                                </div>
-                                <div class="mb-3">
-                                    <label for="feedback_<?php echo $student['user_id']; ?>" class="form-label">Feedback</label>
-                                    <textarea class="form-control" id="feedback_<?php echo $student['user_id']; ?>"
-                                        name="feedback[<?php echo $student['user_id']; ?>]"
-                                        rows="3"><?php echo $feedback; ?></textarea>
+                                        value="<?php echo getGradeBySubmission($conn, $student['user_id'], $tugas_id); ?>">
                                 </div>
                             <?php endforeach; ?>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="submit" name="simpan_penilaian" class="btn btn-primary">Simpan</button>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-    <?php endif; ?>
-
-    <?php foreach ($tugas as $task): ?>
-        <?php if ($_SESSION['role'] == 'teacher'): ?>
-            <div class="modal fade" id="penilaianModal_<?php echo $task['task_id']; ?>" tabindex="-1"
-                aria-labelledby="penilaianModalLabel_<?php echo $task['task_id']; ?>" aria-hidden="true">
-                <div class="modal-dialog modal-dialog-scrollable">
-                    <div class="modal-content">
-                        <form method="post" action="action_update_grade.php">
-                            <input type="hidden" name="class_id" value="<?php echo $class_id; ?>">
-                            <div class="modal-header">
-                                <h1 class="modal-title fs-5" id="penilaianModalLabel_<?php echo $task['task_id']; ?>">Penilaian
-                                    Tugas ID: <?php echo $task['task_id']; ?></h1>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                            </div>
-                            <div class="modal-body">
-                                <input type="hidden" name="tugas_id" value="<?php echo $task['task_id']; ?>">
-                                <?php foreach ($students as $student): ?>
-                                    <?php
-                                    $submission = getSubmission($conn, $student['user_id'], $task['task_id']);
-                                    $grade = $submission ? getGradeDetails($conn, $submission['submission_id']) : null;
-                                    $grade_value = $grade ? $grade['grade'] : 0;
-                                    $feedback = $grade ? htmlspecialchars($grade['feedback'] ?? '-') : '-';
-                                    ?>
-                                    <div class="mb-3">
-                                        <label for="nilai_<?php echo $student['user_id']; ?>"
-                                            class="form-label"><?php echo $student['name']; ?></label>
-                                        <input type="number" class="form-control" id="nilai_<?php echo $student['user_id']; ?>"
-                                            name="nilai[<?php echo $student['user_id']; ?>]" min="0" max="100"
-                                            value="<?php echo $grade_value; ?>">
-                                    </div>
-                                    <div class="mb-3">
-                                        <label for="feedback_<?php echo $student['user_id']; ?>" class="form-label">Feedback</label>
-                                        <textarea class="form-control" id="feedback_<?php echo $student['user_id']; ?>"
-                                            name="feedback[<?php echo $student['user_id']; ?>]"
-                                            rows="3"><?php echo $feedback; ?></textarea>
-                                    </div>
-                                <?php endforeach; ?>
-                            </div>
                             <div class="modal-footer">
                                 <button type="submit" name="simpan_penilaian" class="btn btn-primary">Simpan</button>
                             </div>
@@ -168,18 +165,11 @@ include 'function_user.php';
                     </div>
                 </div>
             </div>
-        <?php endif; ?>
-    <?php endforeach; ?>
+        </div>
+    <?php endif; ?>
 
     <script src="../bootstrap/js/popper.min.js"></script>
     <script src="../bootstrap/js/bootstrap.bundle.min.js"></script>
-    <script>
-        <?php if (isset($_POST['tugas_id']) && $_SESSION['role'] == 'teacher'): ?>
-            var myModal = new bootstrap.Modal(document.getElementById('penilaianModal'), {});
-            myModal.show();
-        <?php endif; ?>
-    </script>
-
 </body>
 
 </html>

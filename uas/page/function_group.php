@@ -153,20 +153,5 @@ if (!function_exists('getGroupGrade')) {
     }
 }
 
-if (!function_exists('getGroupIdByUserIdAndClassId')) {
-    function getGroupIdByUserIdAndClassId($conn, $user_id, $class_id)
-    {
-        $sql = "SELECT sg.study_group_id FROM study_group_member sgm
-            JOIN study_group sg ON sgm.study_group_id = sg.study_group_id
-            WHERE sgm.user_id = ? AND sg.class_id = ?";
-        $stmt = $conn->prepare($sql);
-        $stmt->bind_param("ii", $user_id, $class_id);
-        $stmt->execute();
-        $result = $stmt->get_result();
-        $group = $result->fetch_assoc();
-        $stmt->close();
-        return $group ? $group['study_group_id'] : null;
-    }
 
-}
 

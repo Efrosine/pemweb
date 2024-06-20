@@ -7,6 +7,7 @@ $class_id = isset($_GET['class_id']) ? $_GET['class_id'] : 0;
 
 $teachers = getUsersByRoleAndClass($conn, 'teacher', $class_id);
 $students = getUsersByRoleAndClass($conn, 'student', $class_id);
+
 $error_msg = $_GET['error'] ?? '';
 ?>
 <!-- Error Message Alert -->
@@ -80,7 +81,17 @@ $error_msg = $_GET['error'] ?? '';
                     <input type="hidden" name="class_id" value="<?php echo $class_id; ?>">
                     <div class="mb-3">
                         <label for="uuid_user" class="form-label">UUID User</label>
-                        <input type="text" class="form-control" id="uuid_user" name="uuid_user" required>
+                        <select class="form-control" id="uuid_user" name="uuid_user" required>
+                            <option value="">Pilih User</option>
+                            <?php
+                            $users = getAllUsers($conn);
+                            foreach ($users as $user) {
+                               
+                                    echo '<option value="' . $user['uuid'] . '">' . htmlspecialchars($user['name']) . '</option>';
+                                
+                            }
+                            ?>
+                        </select>
                     </div>
 
                     <div class="modal-footer">

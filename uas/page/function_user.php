@@ -50,3 +50,20 @@ if (!function_exists('getUsersByRoleAndClass')) {
         return $users;
     }
 }
+
+if (!function_exists('getAllUsers')) {
+    function getAllUsers($conn)
+    {
+        $users = [];
+        $sql = "SELECT * FROM user";
+        $result = $conn->query($sql);
+
+        if ($result->num_rows > 0) {
+            while ($row = $result->fetch_assoc()) {
+                $users[] = $row;
+            }
+        }
+
+        return $users;
+    }
+}

@@ -33,10 +33,12 @@ $class = getClassById($conn, $class_id);
             <a class="nav-link <?php echo ($tab == 'orang') ? 'active' : ''; ?>"
                 href="home.php?page=class_content&class_id=<?php echo $class_id; ?>&tab=orang" role="tab">orang</a>
         </li>
-        <li class="nav-item" role="presentation">
-            <a class="nav-link <?php echo ($tab == 'nilai') ? 'active' : ''; ?>"
-                href="home.php?page=class_content&class_id=<?php echo $class_id; ?>&tab=nilai" role="tab">nilai</a>
-        </li>
+        <?php if ($user['role'] == 'teacher'): ?>
+            <li class="nav-item" role="presentation">
+                <a class="nav-link <?php echo ($tab == 'nilai') ? 'active' : ''; ?>"
+                    href="home.php?page=class_content&class_id=<?php echo $class_id; ?>&tab=nilai" role="tab">nilai</a>
+            </li>
+        <?php endif; ?>
     </ul>
 
     <!-- Tab panes -->

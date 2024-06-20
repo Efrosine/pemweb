@@ -6,7 +6,7 @@ include 'function_group.php';
 
 $class_id = isset($_GET['class_id']) ? $_GET['class_id'] : 0;
 
-$groups = getGroupsByClassId($conn, $class_id);
+$group = getGroupsByClassId($conn, $class_id);
 $students = getStudentsWithoutGroups($conn, $class_id);
 $error_msg = $_GET['error'] ?? '';
 ?>
@@ -33,7 +33,7 @@ $error_msg = $_GET['error'] ?? '';
         </button>
     </div>
 
-    <?php foreach ($groups as $group): ?>
+    <?php foreach ($group as $group): ?>
         <div class="container p-3 mb-4" style="border: 2px solid gray; border-radius: 24px;">
             <div class="d-flex flex-column justify-content-start">
                 <div class="me-3">

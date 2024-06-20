@@ -87,6 +87,7 @@ if ($type_filter == 'individual') {
             <form action="action_add_task.php" method="post">
                 <div class="modal-body">
                     <input type="hidden" name="class_id" value="<?php echo $class_id; ?>">
+                    <input type="hidden" name="user_id" value="<?php echo $user_id; ?>">
                     <div class="mb-3">
                         <label for="task_title" class="form-label">Judul Tugas</label>
                         <input type="text" class="form-control" id="task_title" name="task_title" required>

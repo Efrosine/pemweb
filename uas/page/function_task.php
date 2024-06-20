@@ -27,11 +27,11 @@ if (!function_exists('getTasksByClassIdAndType')) {
 }
 
 if (!function_exists('addTask')) {
-    function addTask($conn, $class_id, $title, $description, $type, $due_time)
+    function addTask($conn, $class_id, $title, $description, $type, $due_time, $created_by)
     {
-        $sql = "INSERT INTO task (class_id, title, description, type, due_time) VALUES (?, ?, ?, ?, ?)";
+        $sql = "INSERT INTO task (class_id, title, description, type, due_time,created_by) VALUES (?, ?, ?, ?, ?, ?)";
         $stmt = $conn->prepare($sql);
-        $stmt->bind_param("issss", $class_id, $title, $description, $type, $due_time);
+        $stmt->bind_param("issssi", $class_id, $title, $description, $type, $due_time, $created_by);
 
         if ($stmt->execute()) {
             return true;
@@ -75,23 +75,6 @@ if (!function_exists('updateTask')) {
     }
 }
 
-if (!function_exists('getTasksByClassId')) {
-    function getTasksByClassId($conn, $class_id)
-    {
-        $tasks = [];
-        $sql = "SELECT task_id, title, due_time, type FROM task WHERE class_id = ?";
-        $stmt = $conn->prepare($sql);
-        $stmt->bind_param("i", $class_id);
-        $stmt->execute();
-        $result = $stmt->get_result();
 
-        while ($row = $result->fetch_assoc()) {
-            $tasks[] = $row;
-        }
-
-        $stmt->close();
-        return $tasks;
-    }
-}
 
 

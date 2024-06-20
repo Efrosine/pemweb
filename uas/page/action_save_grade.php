@@ -2,55 +2,45 @@
 include '../db/koneksi.php';
 include 'function_task.php';
 include 'function_grade.php';
+include 'function_class.php';
+include 'function_submision.php';
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    $tugas_id = $_POST['tugas_id'];
-    $nilai_list = $_POST['nilai'];
-    $feedback_list = $_POST['feedback'];
-    $task_type = getTaskType($conn, $tugas_id);
+    $task_id = $_POST['tugas_id'];
+    $class_id = $_POST['class_id'];
+    $nilai = $_POST['nilai'];
+    $techer_id = $_POST['teacher_id'];
+    $student = getClassMembers($conn, $class_id);
 
-    foreach ($nilai_list as $user_id => $nilai) {
-        $feedback = $feedback_list[$user_id];
-        if ($task_type == 'individual') {
-            // Check if grade exists
-            $grade = getGrade($conn, $user_id, $tugas_id);
-            if ($grade) {
-                // Update existing grade
-                $sql = "UPDATE grade SET grade = ?, feedback = ?, status = 'done' WHERE user_id = ? AND task_id = ?";
-                $stmt = $conn->prepare($sql);
-                $stmt->bind_param("isii", $nilai, $feedback, $user_id, $tugas_id);
-            } else {
-                // Insert new grade
-                $sql = "INSERT INTO grade (user_id, task_id, grade, feedback, status) VALUES (?, ?, ?, ?, 'done')";
-                $stmt = $conn->prepare($sql);
-                $stmt->bind_param("iiis", $user_id, $tugas_id, $nilai, $feedback);
-            }
+    foreach ($nilai as $user_id => $grade) {
+        // Validasi dan sanitasi data sebelum disimpan ke database
+        $user_id = (int) $user_id;
+        $grade = (int) $grade;
+
+        $submision_id = getSubmision($conn, $user_id, $task_id);
+        $grades = getGradeBySubmissionId($conn, $submision_id) ? getGradeBySubmissionId($conn, $submision_id) : null;
+        if ($grades) {
+            updateGrade($conn, $teacher_id, $submision_id, $grade, '');
         } else {
-            // Get group id by user id
-            $group_id = getGroupIdByUserId($conn, $user_id, $class_id);
-            if ($group_id) {
-                // Check if group grade exists
-                $group_grade = getGroupGrade($conn, $group_id, $tugas_id);
-                if ($group_grade) {
-                    // Update existing group grade
-                    $sql = "UPDATE study_group_grade SET grade = ?, feedback = ?, status = 'done' WHERE study_group_id = ? AND task_id = ?";
-                    $stmt = $conn->prepare($sql);
-                    $stmt->bind_param("isii", $nilai, $feedback, $group_id, $tugas_id);
-                } else {
-                    // Insert new group grade
-                    $sql = "INSERT INTO study_group_grade (study_group_id, task_id, grade, feedback, status) VALUES (?, ?, ?, ?, 'done')";
-                    $stmt = $conn->prepare($sql);
-                    $stmt->bind_param("iiis", $group_id, $tugas_id, $nilai, $feedback);
-                }
-            }
+            insertGrade($conn, $teacher_id, $submision_id, $grade, '');
         }
 
-        if (!$stmt->execute()) {
-            echo "Error: " . $stmt->error;
-        }
-        $stmt->close();
+        // Query untuk menyimpan atau memperbarui nilai ke database
+
+
+        header("Location: home.php?page=class_content&tab=nilai&class_id=$class_id");
+        exit();
     }
-
-    header("Location: home.php?page=class_content&tab=nilai&class_id=$class_id");
-    exit();
 }
+
+// $sql = "SELECT sg.name
+// FROM study_group sg
+// JOIN class c ON sg.class_id = c.class_id
+// WHERE sg.class_id = 6";
+// $stmt = $conn->prepare($sql);
+// // $stmt->bind_param("i", $class_id);
+// $stmt->execute();
+// $result = $stmt->get_result();
+// $group = $result->fetch_assoc();
+// $stmt->close();
+// return $group;
